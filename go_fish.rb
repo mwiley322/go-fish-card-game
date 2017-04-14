@@ -1,6 +1,30 @@
+module Drawable
+  attr_reader :cards
+
+  def initialize(*args)
+    @cards = []
+    post_initialize(*args)
+  end
+
+  # overridden by class
+  def post_initialize(*args)
+    nil
+  end
+
+  def draw(n=1)
+    @cards.pop(n).reverse
+  end
+
+  def draw_one
+    draw.first
+  end
+
+  def push(*cards)
+    @cards.push(*cards)
+  end
+end
+
 class PlayingCard
-  # RANKS = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"]
-  # SUITS = ["C", "D", "H", "S"]
   attr_reader :rank, :suit, :face
 
   def initialize(args)
@@ -14,27 +38,50 @@ class PlayingCard
 end
 
 class CardDeck
-  def initialize
+  include Drawable
+
+  def post_initialize(shuffled=true)
+    generate_cards
+    shuffle if shuffled
   end
-  def cards
-  end
+
   def to_s
+    @cards.map {|card| card.face }
   end
+
   def shuffle
+    @cards.shuffle!
   end
-  def draw
+
+  private
+
+  def generate_cards(decks=1)
+    ranks = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"]
+    suits = ["C", "D", "H", "S"]
+
+    @cards.clear
+
+    decks.times do |i|
+      ranks.each do |rank|
+        suits.each do |suit|
+            self.push( PlayingCard.new(rank: rank, suit: suit) )
+        end
+      end
+    end
   end
-  def draw_one
-  end
-  def push
-  end
+
 end
 
 class HandOfCards
-  def initialize
+  attr_reader :hand
+
+  def initialize(*args)
   end
+
   def cards
+    @hand.to_a
   end
+
   def to_s
   end
   def shuffle
