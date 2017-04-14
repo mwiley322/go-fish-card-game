@@ -1,17 +1,61 @@
 class PlayingCard
-  # initialize
+  # RANKS = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"]
+  # SUITS = ["C", "D", "H", "S"]
+  attr_reader :rank, :suit, :face
+
+  def initialize(args)
+    @rank = args[:rank]
+    @suit = args[:suit]
+    @face = @rank + @suit
+  end
+  def to_s
+    @face
+  end
 end
 
 class CardDeck
-  # initialize
+  def initialize
+  end
+  def cards
+  end
+  def to_s
+  end
+  def shuffle
+  end
+  def draw
+  end
+  def draw_one
+  end
+  def push
+  end
 end
 
 class HandOfCards
-  # initialize
+  def initialize
+  end
+  def cards
+  end
+  def to_s
+  end
+  def shuffle
+  end
+  def draw
+  end
+  def draw_one
+  end
+  def push
+  end
+  def any?
+  end
+  def take!
+  end
 end
 
 class CardPlayer
-  # initialize
+  def initialize
+  end
+  def hand
+  end
 end
 
 
