@@ -73,28 +73,29 @@ class CardDeck
 end
 
 class HandOfCards
-  attr_reader :hand
+  include Drawable
 
-  def initialize(*args)
+  def post_initialize(starting_cards=[])
+    @cards += starting_cards
   end
-
-  def cards
-    @hand.to_a
-  end
-
   def to_s
+    @cards.join(" ")
   end
-  def shuffle
+  def any?(rank: "", suit: "")
+    face = (rank + suit).upcase
+    return false if face.empty?
+    @cards.any? {|c| c.face.match(face) }
   end
-  def draw
-  end
-  def draw_one
-  end
-  def push
-  end
-  def any?
-  end
-  def take!
+  def take!(rank: "", suit: "")
+    taken = []
+    face = (rank + suit).upcase
+    return taken if face.empty?
+
+    @cards.delete_if do |c|
+      taken.push(c) if c.face.match(face)
+    end
+
+    taken
   end
 end
 
